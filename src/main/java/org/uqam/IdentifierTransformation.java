@@ -4,15 +4,13 @@ import java.util.Arrays;
 
 public class IdentifierTransformation {
 
-    public static String snakeCaseIdentifierToPascalCase(String identifier) {
-        if(identifier == null || identifier.isEmpty()){
-            return identifier;
+    public static String snakeCaseIdentifierToPascalCase(String snakeCase) {
+        if(snakeCase == null || snakeCase.isEmpty()){
+            return snakeCase;
         }
-        char[] workString = snakeCaseIdentifierToCamelCase(identifier).toCharArray();
-        if (workString.length > 0) {
-            workString[0] = Character.toUpperCase(workString[0]);
-        }
-        return new String(workString);
+        String resultPascalCase = snakeCaseIdentifierToCamelCase(snakeCase);
+        resultPascalCase = changeFirstCharForUppercase(resultPascalCase);
+        return resultPascalCase;
     }
 
     public static String snakeCaseIdentifierToCamelCase(String identifier) {
@@ -21,15 +19,10 @@ public class IdentifierTransformation {
         }
 
         identifier = removeFirstsUnderscore(identifier);
-
         String[] workStrings = identifier.toLowerCase().split("_");
 
-        for (int charIndex = 1; charIndex < workStrings.length; charIndex++) {
-            String str = workStrings[charIndex];
-            if(str.length() > 0) {
-                str = str.substring(0,1).toUpperCase() + str.substring(1);
-                workStrings[charIndex] = str;
-            }
+        for (int stringIndex = 1; stringIndex < workStrings.length; stringIndex++) {
+            workStrings[stringIndex] = changeFirstCharForUppercase(workStrings[stringIndex]);
         }
 
         return String.join("", workStrings);
@@ -40,5 +33,12 @@ public class IdentifierTransformation {
             str = str.substring(1);
         }
         return str;
+    }
+
+    private static String changeFirstCharForUppercase(String str){
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0,1).toUpperCase() + str.substring(1);
     }
 }
