@@ -5,8 +5,8 @@ import java.util.Arrays;
 public class IdentifierTransformation {
 
     public static String snakeCaseIdentifierToPascalCase(String identifier) {
-        if(identifier == null){
-            return null;
+        if(identifier == null || identifier.isEmpty()){
+            return identifier;
         }
         char[] workString = snakeCaseIdentifierToCamelCase(identifier).toCharArray();
         if (workString.length > 0) {
@@ -16,23 +16,29 @@ public class IdentifierTransformation {
     }
 
     public static String snakeCaseIdentifierToCamelCase(String identifier) {
-        if(identifier == null || identifier.equals("")){
+        if(identifier == null || identifier.isEmpty()){
             return identifier;
         }
 
-        while (identifier.charAt(0) == '_'){
-            identifier = identifier.substring(1);
-        }
+        identifier = removeFirstsUnderscore(identifier);
+
         String[] workStrings = identifier.toLowerCase().split("_");
 
         for (int charIndex = 1; charIndex < workStrings.length; charIndex++) {
             String str = workStrings[charIndex];
             if(str.length() > 0) {
-                str = str.replace(str.charAt(0), Character.toUpperCase(str.charAt(0)));
+                str = str.substring(0,1).toUpperCase() + str.substring(1);
                 workStrings[charIndex] = str;
             }
         }
 
         return String.join("", workStrings);
+    }
+
+    private static String removeFirstsUnderscore(String str){
+        while (str.charAt(0) == '_'){
+            str = str.substring(1);
+        }
+        return str;
     }
 }

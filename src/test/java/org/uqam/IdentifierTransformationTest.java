@@ -156,4 +156,20 @@ class IdentifierTransformationTest {
         String cCase = IdentifierTransformation.snakeCaseIdentifierToCamelCase( "" );
         assertEquals("",cCase);
     }
+
+    @org.junit.jupiter.api.Test
+    void snakeCaseIdentifierToPascalCase11() {
+        String pCase = IdentifierTransformation.snakeCaseIdentifierToPascalCase(
+                "_Allo_bOnJoubr55__sàlut_"
+        );
+        assertEquals("AlloBonjoubr55Sàlut",pCase);
+    }
+
+    @org.junit.jupiter.api.Test
+    void snakeCaseIdentifierToCamelCase11() {
+        String cCase = IdentifierTransformation.snakeCaseIdentifierToCamelCase(
+                "_Allo_bOnJoubr55__sàlut_"
+        );
+        assertEquals("alloBonjoubr55Sàlut",cCase);
+    }
 }
